@@ -1,0 +1,103 @@
+---
+output: github_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# dataREACHr
+
+<!-- badges: start -->
+
+<!-- badges: end -->
+
+dataREACHr package contains tools to process data for Project REACH at
+Penn State. Project REACH is a longitudinal study of the effects of food
+marketing on children's eating behaviors and neural responses to food
+cues. Data are collected from children and parents across 5 visits.
+
+dataREACHr functions can:
+
+-   organize data and meta-data (JSONS) for surveys (REDCap) and
+    behavioral tasks into the [Brain Imaging Data
+    Structure](https://bids.neuroimaging.io/)
+
+-   parse text files from the RRV task into CSVs
+
+-   generate group-level dataframes containing questionnaire,
+    demographic, intake, and anthropometric data
+
+-   generate subject-specific dataframes containing cleaned behavioral
+    data
+
+-   export bids-compliant TSVs and JSONS for survey and behavioral data
+
+## Installation
+
+You can install the development version of dataREACHr from
+[GitHub](https://github.com/) with:
+
+```{r install, eval=FALSE}
+# install.packages("devtools")
+devtools::install_github("bfuchs18/dataREACHr")
+```
+
+## Data organization
+
+Using dataREACHr functions requires a directory structure of:
+
+base_dir/ (user defined)
+
+├── untouchedRaw/
+
+├── bids/
+
+│ ├── sourcedata/
+
+│ \| ├── phenotype/
+
+and dataREACHr functions will create:
+
+base_dir/ (user defined)
+
+├── bids/
+
+│ ├── phenotype/
+
+│ ├── rawdata/
+
+## Processing data with dataREACHr
+
+Primary user functions include:
+
+-   **proc_redcap() -** processes visit and double-entry REDCap (survey)
+    data in bids/sourcedata/phenotype, exports processed data into
+    bids/phenotype
+
+-   **qc_redcap() -** performs quality assessment checks on output of
+    proc_redcap()
+
+-   **proc_task() -** copies cognitive and behavioral task data from
+    untouchedRaw/ to bids/sourcedata/, processes data and exports into
+    bids/rawdata/
+
+-   **proc_task_derivs() -** creates and exports summary databases for
+    cognitive and behavioral tasks
+
+The script used to process REACH data using the above dataREACHr
+functions can be found
+[here](https://github.com/bfuchs18/R01_Marketing/blob/master/ParticipantData/bids/code/beh_into_bids.R).
+
+This README was generated from README.Rmd using
+`devtools::build_readme()\`
