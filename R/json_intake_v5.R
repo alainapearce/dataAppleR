@@ -1,15 +1,15 @@
-#' json_intake: Generates a json file for intake data
+#' json_intake_v5: Generates a json file for intake data for visit 5
 #'
-#' This function generates a json file for intake data
+#' This function generates a json file for intake data for visit 5
 #'
 #' @return A string with data stored in JSON format containing meta-data
 #'
 #'
 #' @export
 
-json_intake <- function() {
+json_intake_v5 <- function() {
 
-  intake_list <- list(
+  intake_list_v5 <- list(
     participant_id = list( Description = 'participant id number'),
     visit_protocol = list( Description = 'child visit protocol number (does not necessarilty reflect visit order. See participants.tsv for child visit protocol dates)',
                            Levels = list ('1' =	'Child visit protocol 1',
@@ -282,18 +282,55 @@ json_intake <- function() {
                               Unit = "grams"),
     water_pre_w_plate = list( Description = 'Total pre-meal weight of water with plate for all servings',
                             Unit = "grams"),
-    water_post_w_plate = list( Description = 'Total post-meal weight of water with plate for all servings',
-                             Unit = "grams")
+    water_post_w_plate = list( Description = 'Total post-meal weight of water with plate',
+                             Unit = "grams"),
+    # EAH
+    chips_pre_w_o_plate = list( Description = 'Total pre-EAH weight of chips without plate for all servings',
+                                Unit = "grams"),
+    chips_pre_w_plate = list( Description = 'Total pre-EAH weight of chips with plate',
+                              Unit = "grams"),
+    chips_post_w_plate = list( Description = 'Total post-EAH weight of chips with plate',
+                               Unit = "grams"),
+    mms_pre_w_o_plate = list( Description = 'Total pre-EAH weight of M & Ms without plate for all servings',
+                                Unit = "grams"),
+    mms_pre_w_plate = list( Description = 'Total pre-EAH weight of M & Ms with plate',
+                              Unit = "grams"),
+    mms_post_w_plate = list( Description = 'Total post-EAH weight of M & Ms with plate',
+                               Unit = "grams"),
+    brownies_pre_w_o_plate = list( Description = 'Total pre-EAH weight of brownies without plate for all servings',
+                                Unit = "grams"),
+    brownies_pre_w_plate = list( Description = 'Total pre-EAH weight of brownies with plate',
+                              Unit = "grams"),
+    brownies_post_w_plate = list( Description = 'Total post-EAH weight of brownies with plate',
+                               Unit = "grams"),
+    cookies_pre_w_o_plate = list( Description = 'Total pre-EAH weight of cookies without plate for all servings',
+                                Unit = "grams"),
+    cookies_pre_w_plate = list( Description = 'Total pre-EAH weight of cookies with plate',
+                              Unit = "grams"),
+    cookies_post_w_plate = list( Description = 'Total post-EAH weight of cookies with plate',
+                               Unit = "grams"),
+    starburst_pre_w_o_plate = list( Description = 'Total pre-EAH weight of starburst without plate for all servings',
+                                Unit = "grams"),
+    starburst_pre_w_plate = list( Description = 'Total pre-EAH weight of starburst with plate',
+                              Unit = "grams"),
+    starburst_post_w_plate = list( Description = 'Total post-EAH weight of starburst with plate',
+                               Unit = "grams"),
+    fritos_pre_w_o_plate = list( Description = 'Total pre-EAH weight of fritos without plate for all servings',
+                                Unit = "grams"),
+    fritos_pre_w_plate = list( Description = 'Total pre-EAH weight of fritos with plate',
+                              Unit = "grams"),
+    fritos_post_w_plate = list( Description = 'Total post-EAH weight of fritos with plate',
+                               Unit = "grams")
   )
 
   # convert formatting to JSON
-  intake_json <- RJSONIO::toJSON(intake_list, pretty = TRUE)
+  intake_json_v5 <- RJSONIO::toJSON(intake_list_v5, pretty = TRUE)
 
   # double check
-  if (isFALSE(RJSONIO::isValidJSON(intake_json, asText = TRUE))){
+  if (isFALSE(RJSONIO::isValidJSON(intake_json_v5, asText = TRUE))){
     print('Intake JSON file may be invalid')
   }
 
-  return(intake_json)
+  return(intake_json_v5)
 
 }

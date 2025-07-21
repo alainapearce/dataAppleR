@@ -100,7 +100,6 @@ util_format_intake_data <- function(intake_data) {
 
   intake_data['water_post_w_plate'] <- rowSums(intake_data[grepl('water_post_w_plate', names(intake_data))], na.rm = TRUE)
 
-
   # return data
   return(intake_data)
 
