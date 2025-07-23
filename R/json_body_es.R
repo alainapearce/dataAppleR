@@ -1,13 +1,13 @@
-#' json_bes: Generates a json file for the Child Weight Concerns scale
+#' json_body_es: Generates a json file for the Body Esteem Scale
 #'
-#' This function generates a json file for the scored Child Weight Concerns scale and raw participant responses.
+#' This function generates a json file for the scored Body Esteem Scale and raw participant responses.
 #'
-#' @return A string with data stored in JSON format containing meta-data for the Child Weight Concerns scale
+#' @return A string with data stored in JSON format containing meta-data for the Body Esteem Scale
 #'
 #'
 #' @export
 
-json_bes <- function() {
+json_body_es <- function() {
 
   bes_list <- list(
     'MeasurementToolMetadata' = list(
@@ -15,12 +15,6 @@ json_bes <- function() {
       Reference = 'Mendelson, B. K., & White, D. R. (1982). Relation between body-esteem and self-esteem of obese and normal children. Perceptual and motor skills, 54(3), 899-905. https://doi.org/10.2466/pms.1982.54.3.899',
       TermURL = 'https://pubmed.ncbi.nlm.nih.gov/7099901/'),
     participant_id = list( Description = 'participant id number'),
-    visit_protocol = list( Description = 'child visit protocol number (does not necessarilty reflect visit order. See participants.tsv for child visit protocol dates)',
-                           Levels = list ('1' =	'Child visit protocol 1',
-                                          '2' =	'Child visit protocol 2',
-                                          '3' =	'Child visit protocol 3',
-                                          '4'	= 'Child visit protocol 4',
-                                          '5'	= 'Child visit protocol 5')),
     visit_date = list( Description = 'Date of visit this parent-reported survey was completed',
                        Unit = 'YYYY-MM-DD'),
     bes1 = list( Description = 'I like what I look like in pictures',
@@ -91,11 +85,11 @@ json_bes <- function() {
                  Levels = list ('0' = 'No',
                                 '1' = 'Yes',
                                 '2' = 'Prefer not to answer')),
-    bes18 = list( Description = 'I wish I were fatter',
+    bes18 = list( Description = 'I often wish I looked like someone else',
                  Levels = list ('0' = 'No',
                                 '1' = 'Yes',
                                 '2' = 'Prefer not to answer')),
-    bes19 = list( Description = 'I wish I were fatter',
+    bes19 = list( Description = 'My classmates would like to look like me',
                  Levels = list ('0' = 'No',
                                 '1' = 'Yes',
                                 '2' = 'Prefer not to answer')),

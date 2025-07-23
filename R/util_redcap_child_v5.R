@@ -18,6 +18,9 @@
 #'    \item{intake_data}
 #'    \item{liking_data}
 #'    \item{rsa_data}
+#'    \item{cwc_data}
+#'    \item{body_es_data}
+#'    \item{bis_data}
 #'  }
 #' @examples
 #'
@@ -83,7 +86,7 @@ util_redcap_child_v5 <- function(data) {
 
   food_paradigm_json <- json_food_paradigm_v5()
 
-  ## intake_data -- this data can be used for prelim analyses, but eventually will be replaced with double entry data
+  ## intake_data -- this data can be used for prelim analyses, but eventually will be replaced with double entry data ####
   intake_data <- data[grepl('_id|preload_condition|container|preweight|bowl|servings|postweight|^visit', names(data))]
 
   # clean and process intake data
@@ -185,8 +188,8 @@ util_redcap_child_v5 <- function(data) {
               fullness_data = list(data = fullness_data, meta = fullness_json),
               liking_data = list(data = liking_data, meta = liking_json),
               rsa_data = list(data = rsa_data, meta = rsa_visit_json),
-              cwc_data = list(date = cwc_scored, meta = cwc_json),
-              bes_data = list(date = bes_scored, meta = bes_json),
-              bis_data = list(date = bis_data, meta = bis_json)))
+              cwc_data = list(data = cwc_scored, meta = cwc_json),
+              body_es_data = list(data = bes_scored, meta = bes_json),
+              bis_data = list(data = bis_data, meta = bis_json)))
 }
 

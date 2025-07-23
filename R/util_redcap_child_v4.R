@@ -18,6 +18,7 @@
 #'    \item{intake_data}
 #'    \item{liking_data}
 #'    \item{rsa_data}
+#'    \item{sdq_data}
 #'  }
 #' @examples
 #'
@@ -134,12 +135,24 @@ util_redcap_child_v4 <- function(data) {
 
   rsa_visit_json <- json_rsa_visit()
 
+  ## sdq ####
+  sdq_data <- data[grepl('_id|^visit|sdq', names(data))]
+
+  # remove extra columns and re-order
+  sdq_data <- sdq_data[c('participant_id', 'visit_protocol', 'visit_date', names(sdq_data)[grepl('sdq', names(sdq_data))])]
+
+  # score data
+  sdq_scored <- dataprepr::score_socialdq(sdq_data, base_zero = FALSE, id = 'participant_id', pna_value = 3)
+
+  sdq_json <- json_social_dq()
+
   ## return data ####
   return(list(visit_data_child = visit_data_child,
               food_paradigm_info = list(data = food_paradigm_info, meta = food_paradigm_json),
               intake_data = list(data = intake_data, meta = intake_json),
               fullness_data = list(data = fullness_data, meta = fullness_json),
               liking_data = list(data = liking_data, meta = liking_json),
-              rsa_data = list(data = rsa_data, meta = rsa_visit_json)))
+              rsa_data = list(data = rsa_data, meta = rsa_visit_json),
+              sdq_data = list(data = sdq_scored, meta = sdq_json)))
 }
 

@@ -20,12 +20,12 @@ Returned data includes:
 \itemize{
 \item{visit_data_child}
 \item{food_paradigm_info}
-\item{freddy_data}
+\item{fullness_data}
 \item{intake_data}
 \item{liking_data}
-\item{kbas_data}
-\item{stq_data}
 \item{anthro_data}
+\item{rsa_data}
+\item{pst_data}
 }
 }
 \description{

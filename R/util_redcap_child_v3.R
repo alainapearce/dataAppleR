@@ -66,6 +66,7 @@ util_redcap_child_v3 <- function(data) {
   names(visit_data_child)[names(visit_data_child) == 'preload_notes'] <- 'preload_prep_notes'
   names(visit_data_child)[names(visit_data_child) == 'preload_finishnotes'] <- 'preload_notes'
 
+  names(visit_data_child)[names(visit_data_child) == 'graham_post_notes2'] <- 'premeal_graham2_notes'
 
   # reorder
   visit_data_child <- visit_data_child[c('participant_id', 'visit_protocol', 'visit_date', names(visit_data_child)[grepl('^v3', names(visit_data_child))], names(visit_data_child)[grepl('preload', names(visit_data_child))], names(visit_data_child)[grepl('meal', names(visit_data_child))], names(visit_data_child)[grepl('child|rsa_notes$', names(visit_data_child))])]

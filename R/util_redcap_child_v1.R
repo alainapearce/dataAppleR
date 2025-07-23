@@ -3,6 +3,7 @@
 #' This function organizes REDCap data from REDCap visit data, event child_visit_1_arm_1
 #'
 #' @param data data from REDCap event child_visit_1_arm_1
+#' @param date_data date data for REDCap visitd
 #'
 #' @return Will return a list including:
 #' \itemize{
@@ -33,7 +34,7 @@
 #'
 #' @export
 
-util_redcap_child_v1 <- function(data) {
+util_redcap_child_v1 <- function(data, date_data) {
 
   #### Set up/initial checks #####
 
@@ -50,6 +51,8 @@ util_redcap_child_v1 <- function(data) {
 
   # update name of participant ID column
   names(data)[names(data) == 'record_id'] <- 'participant_id'
+
+  data <- merge(data, date_data[c('participant_id', 'v1_age')], by = 'participant_id', all.x = TRUE)
 
   # add visit number
   data['visit_protocol'] <- 1
@@ -112,12 +115,12 @@ util_redcap_child_v1 <- function(data) {
   liking_json <- json_liking()
 
   ## anthro data -- this data can be used for prelim analyses, but eventually will be replaced with double entry data ####
-  anthro_data <- data[grepl('_id|height|weight|^visit|parent_1', names(data))]
+  anthro_data <- data[grepl('_id|height|weight|^visit|parent_1|v1_age|sex', names(data))]
 
   # remove extra columns and re-order
   anthro_data <- anthro_data[!grepl('preweight|postweight|notes|meters', names(anthro_data))]
 
-  anthro_data <- anthro_data[c('participant_id', 'visit_protocol', 'visit_date', 'parent_1', names(anthro_data)[grepl('height|weight', names(anthro_data))])]
+  anthro_data <- anthro_data[c('participant_id', 'visit_protocol', 'visit_date', 'v1_age', 'sex', 'parent_1', names(anthro_data)[grepl('height|weight', names(anthro_data))])]
 
   # rename columns
   names(anthro_data) <- gsub('parent_', 'parent1_', names(anthro_data))
@@ -130,6 +133,15 @@ util_redcap_child_v1 <- function(data) {
   names(anthro_data) <- gsub('height2', 'height2_cm', names(anthro_data))
   names(anthro_data) <- gsub('weight1', 'weight1_kg', names(anthro_data))
   names(anthro_data) <- gsub('weight2', 'weight12_kg', names(anthro_data))
+
+  # compute bmi variables
+  anthro_data['child_bmi'] <- round(anthro_data['child_weight_mean_kg'] /((anthro_data['child_height_mean_cm'] / 100) ^ 2), digits = 2)
+
+  anthro_data['child_bmi_z'] <- round(childsds::sds(value = anthro_data[['child_bmi']], age = anthro_data[['v1_age']], sex = anthro_data[['sex']], item = 'bmi', ref = childsds::cdc.ref, type = 'SDS', male = 0, female = 1), digits = 2)
+
+  anthro_data['child_bmi_p'] <- round((childsds::sds(value = anthro_data[['child_bmi']], age = anthro_data[['v1_age']], sex = anthro_data[['sex']], item = 'bmi', ref = childsds::cdc.ref, type = 'perc', male = 0, female =1)) * 100, digits = 2)
+
+  anthro_data['parent1_bmi'] <- round(anthro_data['parent1_weight_mean_kg'] / ((anthro_data['parent1_height_mean_cm'] / 100) ^ 2), digits = 2)
 
   anthro_measured_json <- json_measured_anthro()
 
@@ -167,15 +179,15 @@ util_redcap_child_v1 <- function(data) {
   names(pst_data) <- gsub('match_', 'match', names(pst_data))
   names(pst_data) <- gsub('sorting_', 'sort', names(pst_data))
 
-  pst_match1_time <- paste0(sprintf('%02d', lubridate::hour(pst_data[['pst_match1_time']])), ':', sprintf('%02d', lubridate::minute(pst_data[['pst_match1_time']])))
-  pst_match1_time <- ifelse(pst_match1_time == 'NA:NA', NA, pst_match1_time)
+  # pst_match1_time <- paste0(sprintf('%02d', lubridate::hour(pst_data[['pst_match1_time']])), ':', sprintf('%02d', lubridate::minute(pst_data[['pst_match1_time']])))
+  # pst_match1_time <- ifelse(pst_match1_time == 'NA:NA', NA, pst_match1_time)
 
-  pst_data['pst_match1_time'] <- pst_match1_time
+  # pst_data['pst_match1_time'] <- pst_match1_time
 
-  pst_match2_time <- paste0(sprintf('%02d', lubridate::hour(pst_data[['pst_match2_time']])), ':', sprintf('%02d', lubridate::minute(pst_data[['pst_match2_time']])))
-  pst_match2_time <- ifelse(pst_match2_time == 'NA:NA', NA, pst_match1_time)
+  # pst_match2_time <- paste0(sprintf('%02d', lubridate::hour(pst_data[['pst_match2_time']])), ':', sprintf('%02d', lubridate::minute(pst_data[['pst_match2_time']])))
+  # pst_match2_time <- ifelse(pst_match2_time == 'NA:NA', NA, pst_match1_time)
 
-  pst_data['pst_match2_time'] <- pst_match2_time
+  # pst_data['pst_match2_time'] <- pst_match2_time
 
   pst_json <- json_pst()
 
